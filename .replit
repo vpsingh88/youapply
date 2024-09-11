@@ -15,6 +15,10 @@ author = "agent"
 task = "workflow.run"
 args = "Run Flask App"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Create Backup"
+
 [[workflows.workflow]]
 name = "Run Flask App"
 author = "agent"
@@ -25,7 +29,18 @@ agentRequireRestartOnSave = false
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "python main.py"
-waitForPort = 5000
+waitForPort = 8080
+
+[[workflows.workflow]]
+name = "Create Backup"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "python create_backup.py"
 
 [deployment]
 run = ["sh", "-c", "python main.py"]
@@ -35,5 +50,13 @@ localPort = 80
 externalPort = 3000
 
 [[ports]]
+localPort = 443
+externalPort = 3001
+
+[[ports]]
 localPort = 5000
 externalPort = 80
+
+[[ports]]
+localPort = 8080
+externalPort = 8080
