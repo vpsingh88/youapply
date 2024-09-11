@@ -1,0 +1,40 @@
+"Design and build a platform called 'Youapply.ai' that streamlines job applications by automating the process for job seekers. Key features should include:
+
+User Registration and Profile Setup:
+
+Users can sign up using email, Google, or LinkedIn.
+Once signed in, users upload their CV or LinkedIn profile.
+Users input specific job preferences, such as salary, location, time frame for finding a full-time role, and openness to part-time or consulting work.
+Job Matching and Recommendation System:
+
+A backend engine matches users' CVs with job descriptions and provides three daily job options.
+Users receive a daily email or dashboard notification with the top 3 job suggestions based on their preferences and CV.
+A recommendation system continuously learns from user interactions to improve job matches over time.
+Automated Job Application Process:
+
+When users select a job, the system navigates to the job's career page using browser automation (e.g., Selenium).
+The platform submits applications with customized CVs and cover letters tailored to the job description.
+OpenAI/ChatGPT integration reviews job descriptions and adjusts the CV and cover letter to optimize for ATS (Applicant Tracking Systems) and job fit before submitting.
+JD to CV Matching and Lead Scoring:
+
+Implement lead scoring to prioritize job matches based on the compatibility of job descriptions with the user's CV.
+API Integration with Perplexity:
+
+The platform uses Perplexity's API to search for 10 companies similar to the user's CV profile, scrapes jobs from their careers pages, and suggests new opportunities.
+Cron Jobs for Daily Company Searches:
+
+A cron job is scheduled to find 3 new companies daily that match the user's profile. The system sends an email to the user with job openings from these companies.
+Users can easily apply to these jobs directly from the platform.
+Admin Dashboard & Paid Features:
+
+An admin dashboard allows control over platform settings and user management.
+Integrate Stripe for premium features such as unlimited daily applications, enhanced CV updates, and priority support.
+ATS Score and CV Optimization:
+
+Add a simple ATS analysis feature where users can upload their CV and receive a score out of 100, showing how well the CV would perform against Applicant Tracking Systems.
+Job Application Tracking:
+
+The platform should have a built-in tracking system to monitor which jobs have been applied to, application statuses, and potential follow-up actions.
+Mobile and Web Compatibility:
+
+Ensure the platform is responsive for mobile devices as well as desktop users.
