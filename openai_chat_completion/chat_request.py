@@ -1,10 +1,8 @@
 import os
-
 from openai import OpenAI
 
 OPENAI_API_KEY = os.environ.get("OPENAI_API_KEY")
 openai_client = OpenAI(api_key=OPENAI_API_KEY)
-
 
 def send_openai_request(prompt: str) -> str:
     completion = openai_client.chat.completions.create(
@@ -14,3 +12,10 @@ def send_openai_request(prompt: str) -> str:
     if not content:
         raise ValueError("OpenAI returned an empty response.")
     return content
+
+def test_openai_integration():
+    try:
+        response = send_openai_request("Hello, can you hear me?")
+        return f"OpenAI API test successful. Response: {response}"
+    except Exception as e:
+        return f"OpenAI API test failed. Error: {str(e)}"

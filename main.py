@@ -11,6 +11,7 @@ from auth import auth_bp
 from job_matching import job_matching_bp
 from automated_application import automated_application_bp
 from admin import admin_bp
+from openai_chat_completion.chat_request import test_openai_integration
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -34,6 +35,11 @@ def load_user(user_id):
 @app.route('/')
 def index():
     return render_template('index.html')
+
+@app.route('/test_openai')
+def test_openai():
+    result = test_openai_integration()
+    return result
 
 if __name__ == '__main__':
     with app.app_context():
