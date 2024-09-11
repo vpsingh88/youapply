@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+    <h1>Welcome, {{ current_user.email }}</h1>
+    <div id="job-suggestions">
+        <h2>Your Job Suggestions</h2>
+        <div id="job-list"></div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/get_job_suggestions')
+        .then(response => response.json())
+        .then(jobs => {
+            const jobList = document.getElementById('job-list');
+            jobs.forEach(job => {
+                const jobElement = document.createElement('div');
+                jobElement.className = 'job-item';
+                jobElement.innerHTML = `
+                    <h3>${job.title}</h3>
+                    <p>${job.company}</p>
+                    <p>${job.description}</p>
+                    <button onclick="applyJob(${job.id})">Apply</button>
+                `;
+                jobList.appendChild(jobElement);
+            });
+        });
+});
+
+function applyJob(jobId) {
+    fetch('/auto_apply', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `job_id=${jobId}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Application submitted successfully!');
+        } else {
+            alert('Error: ' + data.message);
+        }
+    });
+}
+</script>
+{% endblock %}
