@@ -31,6 +31,10 @@ args = "Git Push"
 task = "workflow.run"
 args = "Git Config Check"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Git Setup and Push"
+
 [[workflows.workflow]]
 name = "Run Flask App"
 author = "agent"
@@ -86,6 +90,30 @@ agentRequireRestartOnSave = false
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "git config --list && echo '---' && git remote -v"
+
+[[workflows.workflow]]
+name = "Git Setup and Push"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = """
+
+    git config --list
+    echo '---'
+    git remote -v
+    echo '---'
+    git remote set-url origin $GITHUB_REPO_URL
+    echo '---'
+    git add .
+    echo '---'
+    git commit -m 'Initial commit'
+    echo '---'
+    git push -u origin main
+    """
 
 [deployment]
 run = ["sh", "-c", "python main.py"]
