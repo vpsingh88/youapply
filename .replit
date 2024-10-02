@@ -43,6 +43,10 @@ args = "Git Pull and Push"
 task = "workflow.run"
 args = "Git Merge and Push"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Git Sync and Push"
+
 [[workflows.workflow]]
 name = "Run Flask App"
 author = "agent"
@@ -153,6 +157,25 @@ args = """
 
     git config pull.rebase false
     git pull origin main
+    git add .
+    git commit -m \"Merge remote changes and sync local code\"
+    git push -u origin main
+    """
+
+[[workflows.workflow]]
+name = "Git Sync and Push"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = """
+
+    git fetch origin
+    git merge origin/main --allow-unrelated-histories
+    git status
     git add .
     git commit -m \"Merge remote changes and sync local code\"
     git push -u origin main
