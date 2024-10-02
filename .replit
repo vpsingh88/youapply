@@ -35,6 +35,10 @@ args = "Git Config Check"
 task = "workflow.run"
 args = "Git Setup and Push"
 
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "Git Pull and Push"
+
 [[workflows.workflow]]
 name = "Run Flask App"
 author = "agent"
@@ -112,6 +116,23 @@ args = """
     echo '---'
     git commit -m 'Initial commit'
     echo '---'
+    git push -u origin main
+    """
+
+[[workflows.workflow]]
+name = "Git Pull and Push"
+author = "agent"
+
+[workflows.workflow.metadata]
+agentRequireRestartOnSave = false
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = """
+
+    git pull origin main --allow-unrelated-histories
+    git add .
+    git commit -m \"Merge remote changes and sync local code\"
     git push -u origin main
     """
 
