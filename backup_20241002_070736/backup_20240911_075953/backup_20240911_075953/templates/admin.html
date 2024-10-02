@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+    <h1>Admin Dashboard</h1>
+    
+    <h2>Users</h2>
+    <ul>
+    {% for user in users %}
+        <li>{{ user.email }}</li>
+    {% endfor %}
+    </ul>
+    
+    <h2>Jobs</h2>
+    <ul>
+    {% for job in jobs %}
+        <li>
+            {{ job.title }} - {{ job.company }}
+            <form method="POST" action="{{ url_for('admin.delete_job', job_id=job.id) }}">
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+    {% endfor %}
+    </ul>
+    
+    <h2>Add New Job</h2>
+    <form method="POST" action="{{ url_for('admin.add_job') }}">
+        <input type="text" name="title" placeholder="Job Title" required>
+        <input type="text" name="company" placeholder="Company" required>
+        <textarea name="description" placeholder="Job Description" required></textarea>
+        <input type="url" name="url" placeholder="Application URL" required>
+        <button type="submit">Add Job</button>
+    </form>
+    
+    <h2>Applications</h2>
+    <ul>
+    {% for application in applications %}
+        <li>{{ application.user.email }} applied to {{ application.job.title }} ({{ application.status }})</li>
+    {% endfor %}
+    </ul>
+{% endblock %}

@@ -1,0 +1,151 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome to Youapply.ai{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <div class="container">
+        <h1 class="display-4 animate__animated animate__fadeInDown">Revolutionize Your Job Search with AI</h1>
+        <p class="lead animate__animated animate__fadeInUp">Youapply.ai streamlines your job application process using cutting-edge AI technology.</p>
+        {% if not current_user.is_authenticated %}
+            <a href="{{ url_for('auth.signup') }}" class="btn btn-primary btn-lg mr-3 animate__animated animate__fadeInLeft">Get Started</a>
+            <a href="{{ url_for('auth.login') }}" class="btn btn-outline-light btn-lg animate__animated animate__fadeInRight">Log In</a>
+        {% else %}
+            <a href="{{ url_for('job_matching.dashboard') }}" class="btn btn-primary btn-lg animate__animated animate__fadeInUp">Go to Dashboard</a>
+        {% endif %}
+    </div>
+</div>
+
+<section class="features py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Why Choose Youapply.ai?</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm animate__animated animate__fadeInUp">
+                    <div class="card-body text-center">
+                        <i class="fas fa-robot fa-3x mb-3 text-primary"></i>
+                        <h3 class="card-title">AI-Powered Matching</h3>
+                        <p class="card-text">Our advanced algorithms match your skills with the perfect job opportunities.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                    <div class="card-body text-center">
+                        <i class="fas fa-clock fa-3x mb-3 text-primary"></i>
+                        <h3 class="card-title">Save Time</h3>
+                        <p class="card-text">Automate your job applications and focus on preparing for interviews.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                    <div class="card-body text-center">
+                        <i class="fas fa-chart-line fa-3x mb-3 text-primary"></i>
+                        <h3 class="card-title">Increase Success Rate</h3>
+                        <p class="card-text">Optimize your applications with AI-generated customized resumes and cover letters.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="how-it-works py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">How It Works</h2>
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="step text-center animate__animated animate__fadeInLeft">
+                    <div class="step-number">1</div>
+                    <h4>Create Your Profile</h4>
+                    <p>Sign up and upload your CV or LinkedIn profile.</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="step text-center animate__animated animate__fadeInLeft" style="animation-delay: 0.2s;">
+                    <div class="step-number">2</div>
+                    <h4>Set Preferences</h4>
+                    <p>Specify your job preferences and career goals.</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="step text-center animate__animated animate__fadeInLeft" style="animation-delay: 0.4s;">
+                    <div class="step-number">3</div>
+                    <h4>AI Matching</h4>
+                    <p>Our AI finds the best job matches for you.</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-4">
+                <div class="step text-center animate__animated animate__fadeInLeft" style="animation-delay: 0.6s;">
+                    <div class="step-number">4</div>
+                    <h4>Apply with Ease</h4>
+                    <p>One-click apply with tailored applications.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonials py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">What Our Users Say</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm animate__animated animate__fadeInUp">
+                    <div class="card-body">
+                        <p class="card-text">"Youapply.ai helped me land my dream job in just two weeks! The AI-powered matching is incredible."</p>
+                        <footer class="blockquote-footer">John D., Software Engineer</footer>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">
+                    <div class="card-body">
+                        <p class="card-text">"I was amazed by how much time I saved using Youapply.ai. The automated applications are a game-changer!"</p>
+                        <footer class="blockquote-footer">Sarah M., Marketing Specialist</footer>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="card h-100 shadow-sm animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">
+                    <div class="card-body">
+                        <p class="card-text">"The customized resumes and cover letters really helped me stand out. I highly recommend Youapply.ai!"</p>
+                        <footer class="blockquote-footer">Michael R., Data Analyst</footer>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta py-5">
+    <div class="container text-center">
+        <h2 class="mb-4 animate__animated animate__fadeInUp">Ready to Transform Your Job Search?</h2>
+        <p class="lead mb-4 animate__animated animate__fadeInUp" style="animation-delay: 0.2s;">Join thousands of job seekers who have found their dream jobs using Youapply.ai.</p>
+        <a href="{{ url_for('auth.signup') }}" class="btn btn-primary btn-lg animate__animated animate__fadeInUp" style="animation-delay: 0.4s;">Get Started Now</a>
+    </div>
+</section>
+{% endblock %}
+
+{% block scripts %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Trigger animations when elements come into view
+    const animatedElements = document.querySelectorAll('.animate__animated');
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('animate__animated');
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+
+    animatedElements.forEach(element => {
+        observer.observe(element);
+    });
+});
+</script>
+{% endblock %}

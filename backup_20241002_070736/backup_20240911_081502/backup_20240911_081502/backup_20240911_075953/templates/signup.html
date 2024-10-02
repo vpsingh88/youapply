@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<div class="auth-container">
+    <h1>Sign Up for Youapply.ai</h1>
+    <form method="POST" action="{{ url_for('auth.signup') }}">
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn-primary">Sign Up with Email</button>
+    </form>
+    <div class="social-signup">
+        <button onclick="signUpWithGoogle()" class="btn-google">
+            <i class="fab fa-google"></i> Sign Up with Google
+        </button>
+        <button onclick="signUpWithLinkedIn()" class="btn-linkedin">
+            <i class="fab fa-linkedin"></i> Sign Up with LinkedIn
+        </button>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+function signUpWithGoogle() {
+    // Implement Google Sign Up logic here
+    alert('Google Sign Up not implemented yet');
+}
+
+function signUpWithLinkedIn() {
+    // Implement LinkedIn Sign Up logic here
+    alert('LinkedIn Sign Up not implemented yet');
+}
+</script>
+{% endblock %}

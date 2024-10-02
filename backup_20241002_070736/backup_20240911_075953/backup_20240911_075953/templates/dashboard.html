@@ -1,0 +1,119 @@
+{% extends "base.html" %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="dashboard">
+    <h1>Welcome, {{ current_user.full_name }}</h1>
+    <div class="dashboard-stats">
+        <div class="stat-item">
+            <h3>Applications Sent</h3>
+            <p class="stat-number" id="applications-sent">0</p>
+        </div>
+        <div class="stat-item">
+            <h3>Jobs Matched</h3>
+            <p class="stat-number" id="jobs-matched">0</p>
+        </div>
+        <div class="stat-item">
+            <h3>Profile Strength</h3>
+            <p class="stat-number" id="profile-strength">0%</p>
+        </div>
+        <div class="stat-item">
+            <h3>Interview Invitations</h3>
+            <p class="stat-number" id="interview-invitations">0</p>
+        </div>
+    </div>
+    <div class="dashboard-sections">
+        <div id="job-suggestions">
+            <h2>Your Job Matches</h2>
+            <div id="job-list" class="job-grid"></div>
+        </div>
+        <div id="application-status">
+            <h2>Application Status</h2>
+            <div id="application-list"></div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    fetchJobSuggestions();
+    fetchApplicationStatus();
+    fetchUserStats();
+});
+
+function fetchJobSuggestions() {
+    fetch('/get_job_suggestions')
+        .then(response => response.json())
+        .then(jobs => {
+            const jobList = document.getElementById('job-list');
+            jobList.innerHTML = '';
+            jobs.forEach(job => {
+                const jobElement = document.createElement('div');
+                jobElement.className = 'job-item';
+                jobElement.innerHTML = `
+                    <h3>${job.title}</h3>
+                    <p class="company">${job.company}</p>
+                    <p class="description">${job.description}</p>
+                    <p class="match-score">Match Score: ${job.match_score}%</p>
+                    <button onclick="applyJob(${job.id})" class="btn-apply">Apply</button>
+                `;
+                jobList.appendChild(jobElement);
+            });
+            document.getElementById('jobs-matched').textContent = jobs.length;
+        });
+}
+
+function fetchApplicationStatus() {
+    fetch('/application_status')
+        .then(response => response.json())
+        .then(applications => {
+            const applicationList = document.getElementById('application-list');
+            applicationList.innerHTML = '';
+            applications.forEach(app => {
+                const appElement = document.createElement('div');
+                appElement.className = 'application-item';
+                appElement.innerHTML = `
+                    <h3>${app.job_title}</h3>
+                    <p class="company">${app.company}</p>
+                    <p class="status ${app.status.toLowerCase()}">${app.status}</p>
+                    <p class="date">Applied on: ${app.applied_date}</p>
+                `;
+                applicationList.appendChild(appElement);
+            });
+        });
+}
+
+function fetchUserStats() {
+    fetch('/user_stats')
+        .then(response => response.json())
+        .then(stats => {
+            document.getElementById('applications-sent').textContent = stats.applications_sent;
+            document.getElementById('profile-strength').textContent = stats.profile_strength + '%';
+            document.getElementById('interview-invitations').textContent = stats.interview_invitations;
+        });
+}
+
+function applyJob(jobId) {
+    fetch('/auto_apply', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: `job_id=${jobId}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert('Application submitted successfully!');
+            fetchApplicationStatus();
+            fetchUserStats();
+        } else {
+            alert('Error: ' + data.message);
+        }
+    });
+}
+</script>
+{% endblock %}
